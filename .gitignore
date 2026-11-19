@@ -1,0 +1,34 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+/config/local*
+/secrets/
+*.key
+*.pem
+
+# Private radio data, captures, exports and backups
+/data/
+/logs/
+/backups/
+/captures/
+/exports/
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.log
+*.bin
+*.uf2
+
+# Python and development artifacts
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+node_modules/
+dist/
