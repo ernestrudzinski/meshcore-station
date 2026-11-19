@@ -9,13 +9,15 @@ Projekt jest niezależny od wcześniejszego projektu Meshtastic.
 
 Zakończono rozpoznanie środowiska i przygotowano
 [plan pierwszego uruchomienia](docs/pierwsze-uruchomienie.md).
-Odbiornik ani panel nie są jeszcze zaimplementowane lub uruchomione.
+Gotowy klient społecznościowy działa na Lenovo. Zobacz
+[instrukcję wdrożenia mc-webui](docs/mc-webui.md). Własny odbiornik pozostaje
+na etapie planu.
 
 Po wgraniu Companion USB i fizycznym restarcie przez użytkownika potwierdzono
 komunikację USB: **Heltec V3**, firmware **v1.18.0-81dbae5**, kompilacja
 **15-Oct-2026**, wersja protokołu zgłoszona przez radio: **14**.
 Odczyt wykonano 19 listopada 2026; szczegóły w aktualizacji planu.
-Następny etap to minimalny odbiornik. Lenovo nie ma Bluetooth; transportem jest USB.
+Transportem stacji jest USB.
 
 ## Dane lokalne
 
