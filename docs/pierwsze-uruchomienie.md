@@ -1,5 +1,37 @@
 # Plan pierwszego uruchomienia MeshCore Station
 
+## Aktualny wynik — po fizycznym restarcie, 19 listopada 2026
+
+Użytkownik fizycznie zrestartował Helteca. Ponowna kontrola wykazała enumerację
+mostka CP2102 w tym samym gnieździe USB i dostępność tej samej ścieżki `by-id`.
+W chwili odczytu wskazywała `/dev/ttyUSB1`; numer portu nie jest konfiguracją stałą.
+`lsof` nie wykazał widocznego właściciela portu.
+
+**Połączenie Companion USB zostało potwierdzone odpowiedziami `SELF_INFO`
+i `DEVICE_INFO` przy 115200, 8N1.** Odczytano:
+
+| Pole | Wartość z urządzenia |
+| --- | --- |
+| Model | Heltec V3 |
+| Firmware | v1.18.0-81dbae5 |
+| Data kompilacji | 15-Oct-2026 |
+| Zgłoszona wersja protokołu | 14 |
+
+Zapytanie identyfikacyjne deklarowało obsługę protokołu klienta 3; wartość 14
+pochodzi z odpowiedzi urządzenia i nie oznacza, że przetestowano wszystkie jego
+funkcje. Potwierdzono transport i identyfikację, jeszcze nie odbiór wiadomości LoRa.
+
+Nie wykonywano kolejnego resetu, zmiany ustawień ani zapisu firmware.
+Nie pobierano wiadomości, kontaktów lub sekretów kanałów. Odpowiedzi filtrowano
+do pól diagnostycznych, po czym zamknięto port. Fizyczny restart zakończył
+wcześniejszy okres braku odpowiedzi; dokładnej przyczyny wcześniejszego stanu
+nie ustalono.
+
+**Następny etap:** etap C (środowisko i przypięta biblioteka) oraz D (minimalny
+odbiornik z lokalnym zapisem), weryfikacja parametrów sieci i test znanej wiadomości.
+Zmiana wariantu firmware nie jest już wymagana. Poniższe zapisy o braku odpowiedzi
+i potrzebie zmiany BLE na USB zachowano jako historię rozpoznania.
+
 ## Aktualizacja po wgraniu Companion USB — 19 listopada 2026
 
 Użytkownik poinformował o samodzielnym wgraniu **Companion USB** i potwierdził,

@@ -11,11 +11,11 @@ Zakończono rozpoznanie środowiska i przygotowano
 [plan pierwszego uruchomienia](docs/pierwsze-uruchomienie.md).
 Odbiornik ani panel nie są jeszcze zaimplementowane lub uruchomione.
 
-Po początkowej instalacji BLE użytkownik potwierdził wgranie **Companion USB**.
-Na jego polecenie wysłano sygnał restartu przez mostek USB. Radio nadal nie
-odpowiedziało na zapytania identyfikacyjne. Wersja firmware i skuteczny start
-programu pozostają niepotwierdzone; szczegóły w aktualizacji planu.
-Lenovo nie ma Bluetooth; docelowym transportem pozostaje USB.
+Po wgraniu Companion USB i fizycznym restarcie przez użytkownika potwierdzono
+komunikację USB: **Heltec V3**, firmware **v1.18.0-81dbae5**, kompilacja
+**15-Oct-2026**, wersja protokołu zgłoszona przez radio: **14**.
+Odczyt wykonano 19 listopada 2026; szczegóły w aktualizacji planu.
+Następny etap to minimalny odbiornik. Lenovo nie ma Bluetooth; transportem jest USB.
 
 ## Dane lokalne
 
