@@ -1,5 +1,35 @@
 # Plan pierwszego uruchomienia MeshCore Station
 
+## Aktualizacja po wgraniu Companion USB — 19 listopada 2026
+
+Użytkownik poinformował o samodzielnym wgraniu **Companion USB** i potwierdził,
+że po zapisie nie było restartu. Następnie polecił wywołanie restartu przez USB.
+Wcześniejsza blokada wyboru BLE jest zatem historyczna; obecnie trzeba potwierdzić
+uruchomienie właściwego obrazu oraz identyfikację urządzenia.
+
+- Ponownie sprawdzono `by-id`, fizyczną ścieżkę USB i alias: wskazują nadal
+  CP2102 `0001` w gnieździe `usb-0:2:1.0`, aktualnie `/dev/ttyUSB1`.
+- Nie znaleziono właściciela portu w widocznych procesach. Odczyt deskryptorów
+  159 procesów był niedostępny, więc nie jest to pełne wykluczenie zajętości.
+- Przed restartem brak odpowiedzi `SELF_INFO` i `DEVICE_INFO` przy 115200, 8N1.
+- Na polecenie użytkownika wysłano **jeden impuls RTS 100 ms przy nieaktywnym DTR**,
+  odpowiadający próbie zwykłego restartu ESP przez zewnętrzny mostek USB.
+  [Kod Espressif opisuje restart impulsem EN](https://github.com/espressif/esptool/blob/master/esptool/reset.py).
+- Po 3 sekundach oczekiwania ponowiono `APP_START` i `DEVICE_QUERY`, czekając
+  odpowiednio 2 i 4 sekundy. Nadal brak poprawnych odpowiedzi identyfikacyjnych.
+- Wysłanie impulsu zakończyło się bez błędu sterownika, ale **nie potwierdzono
+  skutecznego restartu ani działania Companion USB**. Port zamknięto.
+- Nie wgrywano firmware, nie kasowano danych, nie pobierano wiadomości i nie
+  zmieniano preferencji radia. Usługi Meshtastic pozostają nieaktywne.
+
+Następna diagnoza wymaga dokładnej nazwy/wersji obrazu i wyniku flashowania.
+Przy dostępie fizycznym sprawdzić ekran oraz przypisanie konkretnej płytki do
+portu. Dopiero po potwierdzeniu urządzenia rozważyć przechwycenie logu startowego
+podczas kontrolowanego restartu. Brak odpowiedzi nie dowodzi błędu obrazu,
+pozostawania w bootloaderze ani fizycznej tożsamości płytki.
+
+**Poniżej zachowano plan i wyniki pierwotnego rozpoznania sprzed tej aktualizacji.**
+
 Data rozpoznania: **19 listopada 2026**, strefa Europe/Warsaw.
 Zakres tego etapu: sprawdzenie środowiska, identyfikacja połączenia i plan.
 Nie wykonano zmiany firmware, kasowania konfiguracji, restartu radia ani
