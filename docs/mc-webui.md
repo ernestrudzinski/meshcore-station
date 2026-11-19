@@ -4,6 +4,23 @@
 na porcie 8080 pod adresem Tailscale Lenovo. Używa HTTP wewnątrz sieci Tailscale.
 Tailscale Serve na tym hoście wymaga osobnych uprawnień administratora.
 
+Na samym Lenovo panel jest także dostępny przez `http://lenovo:8080/`
+oraz `http://localhost:8080/`. Gniazdo systemd użytkownika przekazuje ruch
+z adresów lokalnych `127.0.1.1` i `127.0.0.1` do istniejącego kontenera
+pod adresem Tailscale. Adres sieci domowej Lenovo nie ma nasłuchu panelu.
+
+Instalacja lokalnego dostępu z katalogu repozytorium:
+
+```sh
+install -Dm644 deploy/mc-webui-local.socket ~/.config/systemd/user/mc-webui-local.socket
+install -Dm644 deploy/mc-webui-local.service ~/.config/systemd/user/mc-webui-local.service
+systemctl --user daemon-reload
+systemctl --user enable --now mc-webui-local.socket
+```
+
+Jeśli adres Tailscale Lenovo się zmieni, zaktualizuj cel w pliku usługi
+oraz adres publikacji kontenera.
+
 Panel i `/health` zwróciły HTTP 200 z Lenovo przez adres Tailscale.
 `/api/status` zgłosił aktywne połączenie z radiem. Sprawdzono integralność
 bazy SQLite na hoście. Test z telefonu i test wiadomości LoRa są osobnymi

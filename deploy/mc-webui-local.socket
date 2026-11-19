@@ -1,0 +1,9 @@
+[Unit]
+Description=Local HTTP access to mc-webui
+
+[Socket]
+ListenStream=127.0.0.1:8080
+ListenStream=127.0.1.1:8080
+
+[Install]
+WantedBy=sockets.target

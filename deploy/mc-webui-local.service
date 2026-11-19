@@ -1,0 +1,6 @@
+[Unit]
+Description=Forward local HTTP requests to mc-webui
+
+[Service]
+ExecStart=/usr/lib/systemd/systemd-socket-proxyd --exit-idle-time=30s 100.109.171.11:8080
+NoNewPrivileges=yes
