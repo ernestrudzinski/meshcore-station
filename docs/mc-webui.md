@@ -29,9 +29,14 @@ krokami. Presetu LoRa nie konfigurujemy w ramach instalacji panelu.
 Historia, konfiguracja i kopie aplikacji są w katalogu
 `/home/ernest/ChatGPT/MeshCore/mc-webui/data` (prawa `0700`), mapowanym jako
 `/data`. Katalog jest poza repozytorium. Kontener ma dostęp wyłącznie do
-wskazanego portu USB Helteca. Przy odłączeniu i ponownym podłączeniu radia
-sprawdź status i w razie potrzeby odtwórz kontener, aby ponownie zamontować
-urządzenie wskazywane przez `by-id`.
+wskazanego portu USB Helteca. Po restarcie zasilania radio może dostać nowy
+wpis urządzenia, nawet jeśli ścieżka `by-id` i numer portu pozostaną takie same.
+Panel może wtedy odpowiadać, ale `/api/status` pokaże `connected: false`.
+
+Po powrocie radia na listę USB uruchom
+`docker --context rootless restart mc-webui`. Na Lenovo 20 listopada 2026
+restart kontenera ponownie podłączył port, a panel zgłosił `connected: true`
+pod adresem lokalnym i Tailscale.
 
 Polecenie odtworzenia po zatrzymaniu i usunięciu dotychczasowego kontenera
 `mc-webui`. Zachowaj katalog danych. Uruchom z katalogu `MeshCore`, gdy działa
