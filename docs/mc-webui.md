@@ -33,10 +33,26 @@ wskazanego portu USB Helteca. Po restarcie zasilania radio może dostać nowy
 wpis urządzenia, nawet jeśli ścieżka `by-id` i numer portu pozostaną takie same.
 Panel może wtedy odpowiadać, ale `/api/status` pokaże `connected: false`.
 
-Po powrocie radia na listę USB uruchom
-`docker --context rootless restart mc-webui`. Na Lenovo 20 listopada 2026
-restart kontenera ponownie podłączył port, a panel zgłosił `connected: true`
-pod adresem lokalnym i Tailscale.
+Na Lenovo licznik systemd użytkownika sprawdza port co około 30 sekund.
+Po powrocie Helteca do gniazda objętego regułą uprawnień restartuje działający
+kontener tylko wtedy, gdy pozostaje w nim poprzedni wpis urządzenia USB.
+Jeśli radio jest odłączone, port jest aktualny lub kontener został zatrzymany,
+kontrola kończy się bez restartu. Po przełożeniu kabla do innego gniazda
+sprawdź regułę uprawnień na hoście.
+
+Instalacja automatycznego odzyskiwania z katalogu repozytorium:
+
+```sh
+install -Dm755 deploy/mc-webui-usb-recover ~/.local/libexec/mc-webui-usb-recover
+install -Dm644 deploy/mc-webui-usb-recover.service ~/.config/systemd/user/mc-webui-usb-recover.service
+install -Dm644 deploy/mc-webui-usb-recover.timer ~/.config/systemd/user/mc-webui-usb-recover.timer
+systemctl --user daemon-reload
+systemctl --user enable --now mc-webui-usb-recover.timer
+```
+
+Zdarzenia można sprawdzić przez
+`journalctl --user -u mc-webui-usb-recover.service`. Ręczna alternatywa po
+powrocie radia na listę USB to `docker --context rootless restart mc-webui`.
 
 Polecenie odtworzenia po zatrzymaniu i usunięciu dotychczasowego kontenera
 `mc-webui`. Zachowaj katalog danych. Uruchom z katalogu `MeshCore`, gdy działa

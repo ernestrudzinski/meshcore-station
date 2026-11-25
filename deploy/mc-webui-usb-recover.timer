@@ -1,0 +1,10 @@
+[Unit]
+Description=Check the Heltec USB mount in mc-webui
+
+[Timer]
+OnBootSec=30s
+OnUnitInactiveSec=30s
+AccuracySec=2s
+
+[Install]
+WantedBy=timers.target

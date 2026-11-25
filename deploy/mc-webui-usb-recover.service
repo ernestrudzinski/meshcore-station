@@ -1,0 +1,7 @@
+[Unit]
+Description=Reconnect mc-webui after the Heltec USB port changes
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/libexec/mc-webui-usb-recover
+TimeoutStartSec=40s

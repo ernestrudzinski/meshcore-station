@@ -1,0 +1,27 @@
+#!/bin/sh
+set -eu
+
+radio=/dev/serial/by-id/usb-Silicon_Labs_CP2102_USB_to_UART_Bridge_Controller_0001-if00-port0
+socket=/dev/serial/by-path/pci-0000:00:14.0-usb-0:2:1.0-port0
+container=mc-webui
+container_port=/dev/ttyUSB0
+
+radio_ready() {
+    [ -c "$radio" ] && [ "$radio" -ef "$socket" ] &&
+        getfacl -cpn "$radio" 2>/dev/null | grep -qx "user:$(id -u):rw-"
+}
+
+radio_ready || exit 0
+running=$(docker --context rootless inspect --type container --format '{{.State.Running}}' "$container" 2>/dev/null) || exit 0
+[ "$running" = true ] || exit 0
+
+current=$(stat -Lc '%i:%t:%T' "$radio") || exit 0
+mounted=$(docker --context rootless exec "$container" stat -Lc '%i:%t:%T' "$container_port") || exit 0
+[ "$current" != "$mounted" ] || exit 0
+
+# USB can disappear again while Docker is being queried.
+radio_ready || exit 0
+[ "$(stat -Lc '%i:%t:%T' "$radio")" = "$current" ] || exit 0
+
+echo "Heltec reappeared on USB. Restarting mc-webui to attach the current port."
+docker --context rootless restart "$container"
